@@ -120,3 +120,43 @@ class TestTeamMember(BaseTestCase):
         response = self._delete('/api/v1/users/5/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(json.loads(response.content), {"detail": "Not found."})
+
+    def test_update_team_member_with_invalid_phone_number(self):
+        data = {
+            "phone_number": "875883",
+        }
+        response = self._patch('/api/v1/users/1/', data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {
+            "phone_number": ["Please select a valid phone number."]
+        })
+
+    def test_update_team_member_with_invalid_email_id(self):
+        data = {
+            "email": "testmail",
+        }
+        response = self._patch('/api/v1/users/1/', data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {
+            "email": ["Enter a valid email address."]
+        })
+
+    def test_update_team_member_with_invalid_role(self):
+        data = {
+            "role": 5,
+        }
+        response = self._patch('/api/v1/users/1/', data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {
+            'role': ['"5" is not a valid choice.']
+        })
+
+    def test_update_team_member_with_first_name_null(self):
+        data = {
+            "first_name": None,
+        }
+        response = self._patch('/api/v1/users/1/', data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.loads(response.content), {
+            'first_name': ['This field may not be null.']
+        })
