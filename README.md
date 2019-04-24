@@ -5,7 +5,7 @@
 ### Prerequisites
 - [python3.6](https://www.python.org/downloads/)
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
-- [postgresql10.0+](https://www.postgresql.org/docs/10/release-10-6.html)
+- [postgresql](https://www.postgresql.org/docs/10/release-10-6.html)
 
 ### Initialize the project
 
